@@ -1,7 +1,7 @@
 /*******************************************************
 Nom ......... : main.c
 Role ........ : Le programme principal
-Auteur ...... : Jordan LAIRES (N°Etu: 51802252)
+Auteur ...... : Jordan LAIRES (NÂ°Etu: 51802252)
 Version ..... : V1 du 19/10/20
 ********************************************************/
 
@@ -10,63 +10,62 @@ Version ..... : V1 du 19/10/20
 #include <stdlib.h> //Malloc
 #include "t_file.h"
 
-/* Résumé: Procédure qui recherche le plus court chemin depuis un sommet de référence
- * Paramètre adjacence: Matrice d'adjacence du graphe
- * Paramètre ordre: Nombre de sommets
- * Paramètre s: Numéro du sommet de référence
- * Paramètre l: Tableau dynamique alloué des longueurs minimales des sommets depuis s
- * Paramètre pred: Tableau dynamique alloué des prédécesseurs des sommets
+/* RÃ©sumÃ©: ProcÃ©dure qui recherche le plus court chemin depuis un sommet de rÃ©fÃ©rence
+ * ParamÃ¨tre adjacence: Matrice d'adjacence du graphe
+ * ParamÃ¨tre ordre: Nombre de sommets
+ * ParamÃ¨tre s: NumÃ©ro du sommet de rÃ©fÃ©rence
+ * ParamÃ¨tre l: Tableau dynamique allouÃ© des longueurs minimales des sommets depuis s
+ * ParamÃ¨tre pred: Tableau dynamique allouÃ© des prÃ©dÃ©cesseurs des sommets
  *
- * PS: J'ai remplacé "int** adjacence" par "int adjacence[6][6]" car la fonction
- * n'avait pas accès aux valeurs de la matrice sinon et faisait planter le programme.
+ * PS: J'ai remplacÃ© "int** adjacence" par "int adjacence[6][6]" car la fonction
+ * n'avait pas accÃ¨s aux valeurs de la matrice sinon et faisait planter le programme.
  */
 void plusCourtChemin(int adjacence[4][4], int ordre, int s, int* l, int* pred) {
     // Variables locales
-    int* marques; // tableau dynamique indiquant si les sommets sont marqués ou non
-    int x, y; // numéros de sommets intermédiaires
-    t_file* f; // file d'attente de sommets à créer en s'inspirant des listes doublement chainée avec un .h et un .c dédié
+    int* marques; // tableau dynamique indiquant si les sommets sont marquÃ©s ou non
+    int x, y; // numÃ©ros de sommets intermÃ©diaires
+    t_file* f; // file d'attente de sommets Ã  crÃ©er en s'inspirant des listes doublement chainÃ©e avec un .h et un .c dÃ©diÃ©
 
     // Allouer le tableau marques
     marques = (int*)malloc(ordre*sizeof(int)); //c'etait marques
 
     if (marques == NULL) {
-        printf("L'allocation mémoire de marques a échoué !");
+        printf("L'allocation mÃ©moire de marques a Ã©chouÃ© !");
         exit(1);
     }
 
-    // Initialiser les marquages et les longueurs minimales à 0
+    // Initialiser les marquages et les longueurs minimales Ã  0
     for (x = 0; x < ordre; x++) {
         marques[x] = 0;
         l[x] = 0;
     }
 
-    // Marquer le sommet s à 1
+    // Marquer le sommet s Ã  1
     marques[s] = 1;
 
-    // Créer (allouer) la file f et enfiler s dans f
+    // CrÃ©er (allouer) la file f et enfiler s dans f
     f = initialiser();
     enfiler(f, s);
 
     while (f->premierDeLaFile != NULL) { // Tant que la file f n'est pas vide
-        x = defiler(f);// Défiler le premier sommet x de la file f
+        x = defiler(f);// DÃ©filer le premier sommet x de la file f
 
-        // Pour tous les sommets y adjacents à x et non marqués
+        // Pour tous les sommets y adjacents Ã  x et non marquÃ©s
         for (y = 0; y < ordre; y++)
             if (adjacence[x][y] == 1 && !marques[y]) {
-                printf("je suis dedans!!\n");
                 marques[y] = 1; // marquer le sommet y
                 enfiler(f, y); // enfiler le sommet y dans f
-                pred[y] = x; // x est le prédécesseur de y
-                l[y] = l[x] + 1; // // incrémenter la longueur de y
+                pred[y] = x; // x est le prÃ©dÃ©cesseur de y
+                l[y] = l[x] + 1; // // incrÃ©menter la longueur de y
             }
     }
 }
 
-/* Résumé: Fonction qui crée un graphe aléatoire (Modifier le nombre de sommets dans la fonction en dur
- *         Puis elle va exécuter la fonction de recherche du plus court chemin avec ce graphe aléatoire précédemment crée.
+/* RÃ©sumÃ©: Fonction qui crÃ©e un graphe alÃ©atoire (Modifier le nombre de sommets dans la fonction en dur
+ *         Puis elle va exÃ©cuter la fonction de recherche du plus court chemin avec ce graphe alÃ©atoire prÃ©cÃ©demment crÃ©e.
  *
  * PS: On ne peut pas mettre de variable en taille de matrice en C....
- *     Sinon j'aurais mis en Paramètre le nombre de sommets....
+ *     Sinon j'aurais mis en ParamÃ¨tre le nombre de sommets....
  */
 void grapheAleatoire() {
     int nbsommets = 4;
@@ -86,9 +85,9 @@ void grapheAleatoire() {
     int* longueursMini = malloc(sizeof(*longueursMini));
     int* predecesseurs = malloc(sizeof(*predecesseurs));
 
-    //Si le malloc échoue
+    //Si le malloc Ã©choue
     if (longueursMini == NULL || predecesseurs == NULL) {
-        printf("L'allocation mémoire de longueursMini ET/OU predecesseurs a échouée !");
+        printf("L'allocation mÃ©moire de longueursMini ET/OU predecesseurs a Ã©chouÃ©e !");
         exit(1);
     }
 
@@ -98,7 +97,7 @@ void grapheAleatoire() {
 
 //Le programme principal
 int main() {
-    //Pour tester si le type t_file marche bien, décommenter.
+    //Pour tester si le type t_file marche bien, dÃ©commenter.
     //testFile()
     int ordre = 4;
 
@@ -125,20 +124,20 @@ int main() {
     int* longueursMini = (int*)malloc(ordre * sizeof(int));
     int* predecesseurs = (int*)malloc(ordre * sizeof(int));
 
-    //Si le malloc échoue
+    //Si le malloc Ã©choue
     if (longueursMini == NULL || predecesseurs == NULL) {
-        printf("L'allocation mémoire de longueursMini ET/OU predecesseurs a échouée !");
+        printf("L'allocation mÃ©moire de longueursMini ET/OU predecesseurs a Ã©chouÃ©e !");
         exit(1);
     }
 
     plusCourtChemin(mat, ordre, 1, longueursMini, predecesseurs);
 
-    //Affichage des résultats
+    //Affichage des rÃ©sultats
     for (int x = 0; x < ordre; x++) {
         printf("Sommet %d : longueur minimale = %d, predecesseur = %d\n", x, longueursMini[x], predecesseurs[x]);
     }
 
-    //Libération de la mémoire
+    //LibÃ©ration de la mÃ©moire
     //free(longueursMini);
     //free(predecesseurs);
     
