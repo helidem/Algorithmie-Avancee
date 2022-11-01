@@ -1,8 +1,8 @@
 /*******************************************************
 Nom ......... : main.c
 Role ........ : Le programme principal
-Auteur ...... : Jordan LAIRES (N°Etu: 51802252)
-Version ..... : V1 du 19/10/20
+Auteur ...... : Youcef MEDILEH (N°Etu: 22004750)
+Version ..... : V2 du 30/10/22
 ********************************************************/
 
 #include <stdio.h> //Printf
